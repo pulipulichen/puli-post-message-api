@@ -4,7 +4,8 @@
     <title>sender</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="puli-post-message-api.js"></script>
+    <script src="puli-post-message-api.min.js"></script>
+    <link rel="icon" type="image/png" href="icon.png" />
   </head>
   <body>
     <h1>Wrap string with quote</h1>
@@ -20,9 +21,19 @@
       document.getElementById('start').addEventListener('click', async function () {
         let data = document.getElementById('data').value
         
-        let result = await api.send('receiver.html', data)
+        //let url = 'receiver.html'
+        //let url = 'http://127.0.0.1:8383/puli-post-message-api/receiver.html'
+        let url = 'https://pulipulichen.github.io/puli-post-message-api/receiver.html'
+        let result = await api.send(url, data, {
+          //autoClose: false,
+          //mode: 'popup' // 'popup' | 'iframe'
+        })
         document.getElementById('output').innerHTML = result
       })
+      
+      setTimeout(function () {
+        document.getElementById('start').click()
+      }, 1000)
     </script>
   </body>
 </html>
