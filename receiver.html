@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>receiver</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="puli-post-message-api.js"></script>
+  </head>
+  <body>
+    <h1>Receiver data</h1>
+    <div id="data"></div>
+    
+    <script>
+      let api = PuliPostMessageAPI()
+      
+      api.onReceive(function (data) {
+        return `"${data}"`
+      })
+    </script>
+  </body>
+</html>

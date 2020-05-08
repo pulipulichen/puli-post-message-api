@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>sender</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="puli-post-message-api.js"></script>
+  </head>
+  <body>
+    <h1>Wrap string with quote</h1>
+    <textarea id="data">DATA</textarea>
+    <button type="button" id="start">
+      SEND DATA
+    </button>
+    <div id="output"></div>
+    
+    <script>
+      let api = PuliPostMessageAPI()
+      
+      document.getElementById('start').addEventListener('click', async function () {
+        let data = document.getElementById('data').value
+        
+        let result = await api.send('receiver.html', data)
+        document.getElementById('output').innerHTML = result
+      })
+    </script>
+  </body>
+</html>
