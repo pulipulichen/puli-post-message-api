@@ -51,7 +51,7 @@ function PuliPostMessageAPI() {
         resolve(true)
       })
       
-      console.log(_receiverSendWaitList[url].length, url)
+      //console.log(_receiverSendWaitList[url].length, url)
       if (_receiverSendWaitList[url].length === 1) {
         _receiverSendWaitList[url][0]()
       }
@@ -60,7 +60,7 @@ function PuliPostMessageAPI() {
   
   let _ExecuteNextSendWait = function (url) {
     _receiverSendWaitList[url].shift()
-    console.log('_ExecuteNextSendWait', url)
+    //console.log('_ExecuteNextSendWait', url)
     if (_receiverSendWaitList[url].length > 0) {
       setTimeout(function () {
         _receiverSendWaitList[url][0]()
@@ -109,12 +109,13 @@ function PuliPostMessageAPI() {
     
     // ----------------
     
-    let autoClose = true
+    let autoClose = false
     if (options) {
-      if (options.autoClose === false) {
+      if (options.autoClose === true) {
         autoClose = options.autoClose
       }
-      else if (options.mode === 'popup') {
+      else if (typeof(options.autoClose) === 'undefined'
+          && options.mode === 'popup') {
         autoClose = false
       }
     }

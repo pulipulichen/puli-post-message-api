@@ -22,17 +22,17 @@
         let data = document.getElementById('data').value
         
         //let url = 'receiver.html'
-        //let url = 'http://127.0.0.1:8383/puli-post-message-api/receiver.html'
-        let url = 'https://pulipulichen.github.io/puli-post-message-api/receiver.html'
+        let url = 'http://127.0.0.1:8383/puli-post-message-api/receiver.html'
+        //let url = 'https://pulipulichen.github.io/puli-post-message-api/receiver.html'
         let result = await api.send(url, data, {
-          //autoClose: false,
+          //autoClose: true,
           //mode: 'popup' // 'popup' | 'iframe'
         })
         document.getElementById('output').innerHTML = result + '<br />' + document.getElementById('output').innerHTML
       })
       
       setTimeout(function () {
-        for (let i = 0; i < 10; i++) {
+        for (let i = 0; i < 100; i++) {
           document.getElementById('start').click()
         }
       }, 100)
