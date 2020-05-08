@@ -28,12 +28,14 @@
           //autoClose: false,
           //mode: 'popup' // 'popup' | 'iframe'
         })
-        document.getElementById('output').innerHTML = result
+        document.getElementById('output').innerHTML = result + '<br />' + document.getElementById('output').innerHTML
       })
       
       setTimeout(function () {
-        document.getElementById('start').click()
-      }, 1000)
+        for (let i = 0; i < 10; i++) {
+          document.getElementById('start').click()
+        }
+      }, 100)
     </script>
   </body>
 </html>

@@ -35,13 +35,44 @@ function PuliPostMessageAPI() {
   
   let _receiverReadyList = {}
   let _receiverWaitList = {}
+  let _receiverSendWaitList = {}
   
   // -----------------------
   
   let _receiverElementList = {}
   
+  let _AddSendWait = function (url) {
+    if (Array.isArray(_receiverSendWaitList[url]) === false) {
+      _receiverSendWaitList[url] = []
+    }
+    
+    return new Promise(function (resolve, reject) {
+      _receiverSendWaitList[url].push(function () {
+        resolve(true)
+      })
+      
+      console.log(_receiverSendWaitList[url].length, url)
+      if (_receiverSendWaitList[url].length === 1) {
+        _receiverSendWaitList[url][0]()
+      }
+    })
+  }
+  
+  let _ExecuteNextSendWait = function (url) {
+    _receiverSendWaitList[url].shift()
+    console.log('_ExecuteNextSendWait', url)
+    if (_receiverSendWaitList[url].length > 0) {
+      setTimeout(function () {
+        _receiverSendWaitList[url][0]()
+      }, 0)
+    }
+  }
+  
   let send = async function (url, data, options, callback) {
     url = new URL(url, document.baseURI).href
+    
+    await _AddSendWait(url)
+    
     if (typeof(options) === 'function' && !callback) {
       callback = options
       options = undefined
@@ -186,13 +217,13 @@ function PuliPostMessageAPI() {
     }
   }
   
-  let _returnEventHandler = function (origin, data) {
+  let _returnEventHandler = function (url, data) {
     //console.log(_receiverReturnQueue)
-    if (Array.isArray(_receiverReturnQueue[origin]) === false) {
+    if (Array.isArray(_receiverReturnQueue[url]) === false) {
       return false
     }
 
-    _receiverReturnQueue[origin].forEach(function (callback) {
+    _receiverReturnQueue[url].forEach(function (callback) {
       if (typeof(callback) !== 'function') {
         return false
       }
@@ -200,7 +231,8 @@ function PuliPostMessageAPI() {
     })
 
     // 清空呼叫的資料
-    _receiverReturnQueue[origin] = []
+    _receiverReturnQueue[url] = []
+    _ExecuteNextSendWait(url)
     return true
   }
   

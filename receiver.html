@@ -4,7 +4,7 @@
     <title>receiver</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="puli-post-message-api.min.js"></script>
+    <script src="puli-post-message-api.js"></script>
     <link rel="icon" type="image/png" href="icon.png" />
   </head>
   <body>
@@ -15,8 +15,8 @@
       let api = PuliPostMessageAPI()
       
       api.onReceive(function (data) {
-        document.getElementById('data').innerHTML = `I got "${data}"`
-        return `I got "${data}"`
+        document.getElementById('data').innerHTML = `I got "${data}"` + new Date()
+        return `I got "${data}"` + new Date()
       })
     </script>
   </body>
