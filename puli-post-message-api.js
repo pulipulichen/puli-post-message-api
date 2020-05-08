@@ -1,4 +1,7 @@
-function PuliPostMessageAPI() {
+function PuliPostMessageAPI(options) {
+  options = options ? options : {}
+  let maunalReady = typeof(options.maunalReady) === 'boolean' ? options.maunalReady : false
+  
   /**
    * 開啟視窗的呼叫者
    * @type type
@@ -22,17 +25,27 @@ function PuliPostMessageAPI() {
   }
   
   //console.log(opener)
-  if (opener) {
+  if (opener && maunalReady === false) {
     docReady(function () {
-      //console.log('ready', location.href.slice(location.href.lastIndexOf('/') + 1))
-      opener.postMessage({
-        eventName: 'ready',
-        url: location.href
-      }, '*')
-      //console.log('ready', location.href.slice(location.href.lastIndexOf('/') + 1))
+      _sendReadyMessage()
     })
   }
   
+  let _sendReadyMessage = function () {
+    //console.log('ready', location.href.slice(location.href.lastIndexOf('/') + 1))
+    if (_isSentReadyMessage === true) {
+      return false
+    }
+    _isSentReadyMessage = true
+    
+    opener.postMessage({
+      eventName: 'ready',
+      url: location.href
+    }, '*')
+    //console.log('ready', location.href.slice(location.href.lastIndexOf('/') + 1))
+  }
+  
+  let _isSentReadyMessage = false
   let _receiverReadyList = {}
   let _receiverWaitList = {}
   let _receiverSendWaitList = {}
@@ -68,15 +81,13 @@ function PuliPostMessageAPI() {
     }
   }
   
-  let send = async function (url, data, options, callback) {
+  let send = async function (url, data, options) {
     url = new URL(url, document.baseURI).href
     
     await _AddSendWait(url)
     
-    if (typeof(options) === 'function' && !callback) {
-      callback = options
-      options = undefined
-    }
+    options = options ? options : {}
+    let {eventName, callback} = options
     
     let mode = 'iframe'
     if (options && options.mode) {
@@ -129,7 +140,7 @@ function PuliPostMessageAPI() {
       return receiver
     }
     
-    let result = await _sendToReceiver(getReceiver, url, data)
+    let result = await _sendToReceiver(getReceiver, url, eventName, data)
     
     if (autoClose === false) {
       if (!_receiverElementList[url]) {
@@ -158,13 +169,14 @@ function PuliPostMessageAPI() {
   
   // -----------------------
   
-  let _sendToReceiver = async function (getReceiver, url, data) {
+  let _sendToReceiver = async function (getReceiver, url, eventType, data) {
     await _waitReceiverReady(url)
     
     let receiver = getReceiver()
     //console.log(receiver)
     receiver.postMessage({
       eventName: 'send',
+      eventType: eventType,
       data: data,
       url: location.href
     }, url)
@@ -200,6 +212,7 @@ function PuliPostMessageAPI() {
     let eventName = event.data.eventName
     let data = event.data.data
     let url = event.data.url
+    let eventType  = event.data.eventType
     
     //console.log(eventName, data, location.href)
     
@@ -211,7 +224,7 @@ function PuliPostMessageAPI() {
       _returnEventHandler(url, data)
     }
     else if (eventName === 'send') {
-      _sendEventHandler(source, url, data)
+      _sendEventHandler(source, url, eventType, data)
     }
     else if (eventName === 'ready') {
       _readyEventHandler(url)
@@ -237,11 +250,11 @@ function PuliPostMessageAPI() {
     return true
   }
   
-  let _sendEventHandler = async function (source, origin, input) {
+  let _sendEventHandler = async function (source, origin, eventType, input) {
     let result
     
-    if (typeof(_receiveHandler) === 'function') {
-      result = await _receiveHandler(input)
+    if (typeof(_receiveHandler[eventType]) === 'function') {
+      result = await _receiveHandler[eventType](input)
     }
     
     source.postMessage({
@@ -281,19 +294,45 @@ function PuliPostMessageAPI() {
   
   // -----------------------
   
-  let _receiveHandler
+  let _receiveHandler = {}
   
-  let onReceive = function (callback) {
+  let addReceiveListener = function (eventType, callback) {
+    if (typeof(eventType) === 'function' && !callback) {
+      callback = eventType
+      eventType = 'default'
+    }
+    
     if (typeof(callback) !== 'function') {
       return false
     }
-    _receiveHandler = callback
+    
+    _receiveHandler[eventType] = callback
+  }
+  
+  let removeReceiveListener = function (eventType, callback) {
+    if (typeof(eventType) === 'function' && !callback) {
+      callback = eventType
+      eventType = 'default'
+    }
+    
+    if (typeof(callback) !== 'function'
+            || !_receiveHandler[eventType]) {
+      return false
+    }
+    
+    delete _receiveHandler[eventType]
+  }
+  
+  let ready = function () {
+    _sendReadyMessage()
   }
   
   // -------------------------------
   
   return {
     send: send,
-    onReceive: onReceive
+    addReceiveListener: addReceiveListener,
+    removeReceiveListener: removeReceiveListener,
+    ready: ready
   }
 }

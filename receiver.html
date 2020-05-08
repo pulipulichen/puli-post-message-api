@@ -14,7 +14,7 @@
     <script>
       let api = PuliPostMessageAPI()
       
-      api.onReceive(function (data) {
+      api.addReceiveListener(function (data) {
         document.getElementById('data').innerHTML = `I got "${data}"` + new Date()
         return `I got "${data}"` + new Date()
       })
