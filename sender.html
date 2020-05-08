@@ -10,21 +10,37 @@
   <body>
     <h1>Wrap string with quote</h1>
     <textarea id="data">DATA</textarea>
-    <button type="button" id="start">
-      SEND DATA
+    <button type="button" id="send1">
+      SEND 1
+    </button>
+    <button type="button" id="send2">
+      SEND 2
     </button>
     <div id="output"></div>
     
     <script>
       let api = PuliPostMessageAPI()
       
-      document.getElementById('start').addEventListener('click', async function () {
+      //let url = 'receiver.html'
+      let url = 'http://127.0.0.1:8383/puli-post-message-api/receiver.html'
+      //let url = 'https://pulipulichen.github.io/puli-post-message-api/receiver.html'
+      
+      document.getElementById('send1').addEventListener('click', async function () {
         let data = document.getElementById('data').value
         
-        //let url = 'receiver.html'
-        let url = 'http://127.0.0.1:8383/puli-post-message-api/receiver.html'
-        //let url = 'https://pulipulichen.github.io/puli-post-message-api/receiver.html'
         let result = await api.send(url, data, {
+          eventType: 'aaa'
+          //autoClose: true,
+          //mode: 'popup' // 'popup' | 'iframe'
+        })
+        document.getElementById('output').innerHTML = result + '<br />' + document.getElementById('output').innerHTML
+      })
+      
+      document.getElementById('send2').addEventListener('click', async function () {
+        let data = document.getElementById('data').value
+        
+        let result = await api.send(url, data, {
+          eventType: 'bbb'
           //autoClose: true,
           //mode: 'popup' // 'popup' | 'iframe'
         })
@@ -32,8 +48,8 @@
       })
       
       setTimeout(function () {
-        for (let i = 0; i < 1; i++) {
-          document.getElementById('start').click()
+        for (let i = 0; i < 100; i++) {
+          document.getElementById('send' + ((i % 2) + 1) ).click()
         }
       }, 100)
     </script>

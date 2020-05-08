@@ -14,9 +14,14 @@
     <script>
       let api = PuliPostMessageAPI()
       
-      api.addReceiveListener(function (data) {
+      api.addReceiveListener('aaa', function (data) {
         document.getElementById('data').innerHTML = `I got "${data}"` + new Date()
         return `I got "${data}"` + new Date()
+      })
+      
+      api.addReceiveListener('bbb', function (data) {
+        document.getElementById('data').innerHTML = `I got "${data}"` + new Date()
+        return `You got "${data}"` + new Date()
       })
     </script>
   </body>

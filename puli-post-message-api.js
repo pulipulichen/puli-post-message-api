@@ -87,7 +87,8 @@ function PuliPostMessageAPI(options) {
     await _AddSendWait(url)
     
     options = options ? options : {}
-    let {eventName, callback} = options
+    let {eventType, callback} = options
+    eventType = eventType ? eventType : 'default'
     
     let mode = 'iframe'
     if (options && options.mode) {
@@ -140,7 +141,8 @@ function PuliPostMessageAPI(options) {
       return receiver
     }
     
-    let result = await _sendToReceiver(getReceiver, url, eventName, data)
+    //console.log(eventType)
+    let result = await _sendToReceiver(getReceiver, url, eventType, data)
     
     if (autoClose === false) {
       if (!_receiverElementList[url]) {
@@ -229,6 +231,9 @@ function PuliPostMessageAPI(options) {
     else if (eventName === 'ready') {
       _readyEventHandler(url)
     }
+    else if (eventName === 'error') {
+      _errorEventHandler(url, event.data.message)
+    }
   }
   
   let _returnEventHandler = function (url, data) {
@@ -256,6 +261,14 @@ function PuliPostMessageAPI(options) {
     if (typeof(_receiveHandler[eventType]) === 'function') {
       result = await _receiveHandler[eventType](input)
     }
+    else {
+      source.postMessage({
+        eventName: 'error',
+        message: `sender's eventType is not found: ` + eventType,
+        url: location.href
+      }, origin)
+      return false
+    }
     
     source.postMessage({
       eventName: 'return',
@@ -271,6 +284,15 @@ function PuliPostMessageAPI(options) {
       _receiverWaitList[origin]()
       delete _receiverWaitList[origin]
     }
+  }
+  
+  let _errorEventHandler = function (url, message) {
+    console.error(message)
+    
+    // 清空呼叫的資料
+    _receiverReturnQueue[url] = []
+    _ExecuteNextSendWait(url)
+    return true
   }
   
   let _waitReceiverReady = function (url) {
