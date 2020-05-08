@@ -12,7 +12,13 @@
     <div id="data"></div>
     
     <script>
-      let api = PuliPostMessageAPI()
+      let api = PuliPostMessageAPI({
+        maunalReady: true
+      })
+      
+      setTimeout(function () {
+        api.ready()
+      }, 1000)
       
       api.addReceiveListener('aaa', function (data) {
         document.getElementById('data').innerHTML = `I got "${data}"` + new Date()

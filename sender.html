@@ -29,7 +29,7 @@
         let data = document.getElementById('data').value
         
         let result = await api.send(url, data, {
-          eventType: 'aaa'
+          eventType: 'aaa',
           //autoClose: true,
           //mode: 'popup' // 'popup' | 'iframe'
         })
@@ -40,8 +40,8 @@
         let data = document.getElementById('data').value
         
         let result = await api.send(url, data, {
-          eventType: 'bbb'
-          //autoClose: true,
+          eventType: 'bbb',
+          autoClose: true,
           //mode: 'popup' // 'popup' | 'iframe'
         })
         document.getElementById('output').innerHTML = result + '<br />' + document.getElementById('output').innerHTML

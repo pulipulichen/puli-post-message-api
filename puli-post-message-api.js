@@ -81,6 +81,8 @@ function PuliPostMessageAPI(options) {
     }
   }
   
+  // ---------------------------
+  
   let send = async function (url, data, options) {
     url = new URL(url, document.baseURI).href
     
@@ -89,6 +91,7 @@ function PuliPostMessageAPI(options) {
     options = options ? options : {}
     let {eventType, callback} = options
     eventType = eventType ? eventType : 'default'
+    //console.log(options)
     
     let mode = 'iframe'
     if (options && options.mode) {
@@ -144,22 +147,24 @@ function PuliPostMessageAPI(options) {
     //console.log(eventType)
     let result = await _sendToReceiver(getReceiver, url, eventType, data)
     
-    if (autoClose === false) {
-      if (!_receiverElementList[url]) {
-        _receiverElementList[url] = receiver
-      }
-    }
-    
     // ---------------
     
     if (autoClose === true) {
       if (mode === 'iframe') {
-        receiverElement.parentNode.removeChild(receiverElement)
+        if (receiverElement) {
+          receiverElement.parentNode.removeChild(receiverElement)
+        }
       }
       else {
         receiver.close()
       }
       delete _receiverReadyList[url]
+      delete _receiverElementList[url]
+    }
+    else {
+      if (!_receiverElementList[url]) {
+        _receiverElementList[url] = receiver
+      }
     }
     
     if (typeof(callback) === 'function') {
