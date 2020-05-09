@@ -39,7 +39,7 @@
       document.getElementById('send2').addEventListener('click', async function () {
         let data = document.getElementById('data').value
         
-        let result = await api.send(url + '?a=1', data, {
+        let result = await api.send(url, data, {
           eventType: 'bbb',
           autoClose: true,
           //mode: 'popup' // 'popup' | 'iframe'
