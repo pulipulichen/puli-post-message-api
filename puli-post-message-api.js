@@ -81,6 +81,16 @@ function PuliPostMessageAPI(options) {
     }
   }
   
+  let sleep = function (ms) {
+    ms = ms ? ms : 100
+    
+    return new Promise(function (resolve) {
+      setTimeout(function () {
+        resolve(true)
+      }, ms)
+    })
+  }
+  
   // ---------------------------
   
   let send = async function (url, data, options) {
@@ -98,16 +108,55 @@ function PuliPostMessageAPI(options) {
       mode = options.mode
     }
     
+    
+    let autoClose = false
+    if (options) {
+      if (options.autoClose === true) {
+        autoClose = options.autoClose
+      }
+      else if (typeof(options.autoClose) === 'undefined'
+          && options.mode === 'popup') {
+        autoClose = false
+      }
+    }
+    
+    // ---------------
+    
+    if (autoClose === true && _receiverElementList[url]) {
+      if (mode === 'iframe') {
+        let element = document.querySelector(`iframe[data-url="${url}"]`)
+        //console.log(element)
+        if (element !== null) {
+          element.parentNode.removeChild(element)
+        }
+        //alert('有刪除嗎？')
+      }
+      else if (mode === 'popup') {
+        _receiverElementList[url].close()
+      }
+      
+      delete _receiverReadyList[url]
+      delete _receiverElementList[url]
+      //await sleep(3000)
+    }
+    
     let receiver
     let receiverElement
     if (_receiverElementList[url]) {
+      //console.log('從cache')
       receiver = _receiverElementList[url]
     }
     else if (mode === 'iframe') {
-      receiverElement = document.createElement("iframe"); 
-      receiverElement.style.display = 'none'
-      receiverElement.src = url
-      document.body.appendChild(receiverElement)
+      //console.log('iframe')
+      receiverElement = document.querySelector(`iframe[data-url="${url}"]`)
+      if (receiverElement === null) {
+        receiverElement = document.createElement("iframe"); 
+        receiverElement.style.display = 'none'
+        receiverElement.src = url
+        //console.log(url)
+        receiverElement.setAttribute('data-url', url)
+        document.body.appendChild(receiverElement)
+      }
     }
     else if (mode === 'popup') {
       let target = undefined
@@ -123,18 +172,6 @@ function PuliPostMessageAPI(options) {
     }
     
     // ----------------
-    
-    let autoClose = false
-    if (options) {
-      if (options.autoClose === true) {
-        autoClose = options.autoClose
-      }
-      else if (typeof(options.autoClose) === 'undefined'
-          && options.mode === 'popup') {
-        autoClose = false
-      }
-    }
-    
     
     // ---------------
     let getReceiver = function () {
@@ -181,6 +218,7 @@ function PuliPostMessageAPI(options) {
     
     let receiver = getReceiver()
     //console.log(receiver)
+    //console.log(location.href, url)
     receiver.postMessage({
       eventName: 'send',
       eventType: eventType,
