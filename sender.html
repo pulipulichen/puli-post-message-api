@@ -31,7 +31,8 @@
         let result = await api.send(url, data, {
           eventType: 'aaa',
           //autoClose: true,
-          //mode: 'popup' // 'popup' | 'iframe'
+          mode: 'popup', // 'popup' | 'iframe'
+          //newWindow: true
         })
         document.getElementById('output').innerHTML = result + '<br />' + document.getElementById('output').innerHTML
       })
