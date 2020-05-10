@@ -21,19 +21,22 @@
     <script>
       let api = PuliPostMessageAPI()
       
-      let api2 = PuliPostMessageAPI()
+      // Test duplicate loading
+      //let api2 = PuliPostMessageAPI()
       
       //let url = 'receiver.html'
-      let url = 'http://127.0.0.1:8383/puli-post-message-api/receiver.html'
+      //let url = 'http://127.0.0.1:8383/puli-post-message-api/receiver.html'
       //let url = 'https://pulipulichen.github.io/puli-post-message-api/receiver.html'
+      let url = 'http://127.0.0.1:8383/puli-post-message-api/receiver-redirect.html'
       
       document.getElementById('send1').addEventListener('click', async function () {
         let data = document.getElementById('data').value
+        //console.log('click send 1')
         
         let result = await api.send(url, data, {
           eventType: 'aaa',
           //autoClose: true,
-          mode: 'popup', // 'popup' | 'iframe'
+          //mode: 'popup', // 'popup' | 'iframe'
           //newWindow: true
         })
         document.getElementById('output').innerHTML = result + '<br />' + document.getElementById('output').innerHTML
@@ -51,7 +54,8 @@
       })
       
       setTimeout(function () {
-        for (let i = 0; i < 100; i++) {
+        let count = 1
+        for (let i = 0; i < count; i++) {
           document.getElementById('send' + ((i % 2) + 1) ).click()
         }
       }, 100)

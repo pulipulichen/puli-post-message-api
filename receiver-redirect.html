@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>receiver</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="puli-post-message-api.js"></script>
+    <link rel="icon" type="image/png" href="icon.png" />
+  </head>
+  <body>
+    <h1>Redirect Receiver data</h1>
+    <div id="data"></div>
+    
+    <script>
+      location.href = 'receiver.html'
+      /*
+      let api = PuliPostMessageAPI({
+        maunalReady: true
+      })
+      
+      setTimeout(function () {
+        api.ready()
+      }, 1000)
+      
+      api.addReceiveListener('aaa', function (data) {
+        document.getElementById('data').innerHTML = `I got "${data}"` + new Date()
+        return `I got "${data}"` + new Date()
+      })
+      
+      api.addReceiveListener('bbb', function (data) {
+        document.getElementById('data').innerHTML = `I got "${data}"` + new Date()
+        return `You got "${data}"` + new Date()
+      })
+       */
+    </script>
+  </body>
+</html>
