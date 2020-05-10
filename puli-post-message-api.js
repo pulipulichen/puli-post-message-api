@@ -1,4 +1,11 @@
+window.PuliPostMessageAPIInited = false
+
 function PuliPostMessageAPI(options) {
+  if (window.PuliPostMessageAPIInited === true) {
+    throw new Error('PuliPostMessageAPI was loaded.')
+  }
+  window.PuliPostMessageAPIInited = true
+  
   let pageName = location.href.slice(location.href.lastIndexOf('/') + 1)
   
   options = options ? options : {}
