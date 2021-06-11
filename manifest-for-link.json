@@ -1,0 +1,16 @@
+{
+  "name": "Shortcut Head Modifier",
+  "short_name": "Shortcut Modi",
+  "start_url": "https://stackoverflow.com/questions/736513/how-do-i-parse-a-url-into-hostname-and-path-in-javascript",
+  "display": "standalone",
+  "background_color": "#FFF8DB",
+  "theme_color": "#FBBD08",
+  "description": "Modify the &lt;head&lg; to custom a shortcut.",
+  "icons": [{
+   "src": "https://findicons.com/files/icons/1233/somatic_rebirth_apps/128/transmit_monster_truck.png",
+   "sizes": "128x128",
+   "type": "image/png",
+   "density": "1"
+  }
+]
+}
