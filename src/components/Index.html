@@ -1,0 +1,55 @@
+<div class="Index ui form">
+  <div class="field">
+    <label for="fieldTitle">
+      Title
+    </label>
+    <input type="text" 
+           v-model="fieldTitle" 
+           id="fieldTitle"
+           onfocus="this.select()"
+           />
+  </div>
+  <div class="field">
+    <label for="fieldFavicon">
+      Favicon
+    </label>
+    <input type="text" 
+           v-model="fieldFavicon" 
+           onfocus="this.select()"
+           id="fieldFavicon" />
+  </div>
+  <div class="field">
+    <label for="fieldFindFavicon">
+      Find Favicon
+    </label>
+    <input type="text" 
+           v-model="fieldFindFavicon" 
+           onfocus="this.select()"
+           id="fieldFindFavicon" />
+    <div class="ui fluid basic buttons"
+         v-bind:class="{disabled: (fieldFindFavicon === '')}">
+      <a class="ui button"
+         v-bind:href="linkFindIcon"
+         v-bind:target="'findicon_' + fieldFindFavicon">
+           Findicons
+      </a>
+      <a class="ui button"
+         v-bind:href="linkIconNinja"
+         v-bind:target="'iconninja_' + fieldFindFavicon">
+           Icon Ninja
+      </a>
+    </div>
+  </div>
+  <div class="field">
+    <label for="fieldOutput">
+      Output
+    </label>
+    <textarea v-html="fieldOutput"
+              id="fieldOutput"
+              onfocus="this.select()"></textarea>
+  </div>
+  <div class="ui fluid button"
+       v-on:click="copyFieldOutput">
+    COPY
+  </div>
+</div>
