@@ -42,10 +42,16 @@ let Index = {
       return ''
     },
     fieldOutput () {
+      /*
       return `<head>
   <title>${this.fieldTitle}</title>
   ${this.linkFavicon}
   <link rel="manifest" href="https://pulipulichen.github.io/Chrome-Shortcut-Head-Modifier/manifest-for-link.json">
+</head>`
+      */
+      return `<head>
+  <title>${this.fieldTitle}</title>
+  ${this.linkFavicon}
 </head>`
     },
     linkFindIcon () {
