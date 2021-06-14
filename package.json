@@ -1,7 +1,7 @@
 {
-  "name": "pwa-invoice-list",
+  "name": "Chrome-Shortcut-Head-Modifier",
   "version": "1.0.0",
-  "description": "DEMO: https://pulipulichen.github.io/PWA-Invoice-List/",
+  "description": "DEMO: https://pulipulichen.github.io/Chrome-Shortcut-Head-Modifier/",
   "main": "index.js",
   "scripts": {
     "w1.webpack-build-development": "webpack --mode development --config ./webpack/webpack.config.js ",
@@ -12,7 +12,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://pulipuli.chen@gmail.com@github.com/pulipulichen/PWA-Invoice-List.git"
+    "url": "git+https://pulipuli.chen@gmail.com@github.com/pulipulichen/Chrome-Shortcut-Head-Modifier.git"
   },
   "keywords": [
     "PWA"
@@ -20,9 +20,9 @@
   "author": "Pulipuli Chen",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/pulipulichen/PWA-Invoice-List/issues"
+    "url": "https://github.com/pulipulichen/Chrome-Shortcut-Head-Modifier/issues"
   },
-  "homepage": "https://github.com/pulipulichen/PWA-Invoice-List#readme",
+  "homepage": "https://github.com/pulipulichen/Chrome-Shortcut-Head-Modifier#readme",
   "devDependencies": {
     "@babel/core": "^7.5.5",
     "@babel/plugin-proposal-object-rest-spread": "^7.5.5",

@@ -23,7 +23,7 @@ let Index = {
     linkFavicon () {
       let icon = this.fieldFavicon
       let filename = this.faviconName
-      console.log(filename)
+      //console.log(filename)
       if (filename.endsWith('.ico')) {
         // https://blog.pulipuli.info/favicon.ico
         return `<link href="${icon}" rel="icon" type="image/x-icon">`
