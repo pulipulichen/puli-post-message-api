@@ -1,23 +1,8 @@
 #main {
   padding: 1rem !important;
 }
-/*
-#main {
-  margin: 1rem !important;
-  background-color: red; 
-}
-/*
-button {
-  height: 30px;
-  width: 30px;
-  outline: none;
-  margin: 10px;
-  border: none;
-  border-radius: 2px;
-}
 
-button.current {
-  box-shadow: 0 0 0 2px white,
-              0 0 0 4px black;
+#iconInput {
+  border-bottom-left-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
 }
-*/

@@ -9,6 +9,10 @@ iconInput.addEventListener("change", validTitleIcon)
 titleInput.addEventListener("focus", selectThis) 
 iconInput.addEventListener("focus", selectThis) 
 
+setTimeout(() => {
+  titleInput.select()
+}, 100)
+
 function selectThis () {
   this.select()
 }
@@ -21,6 +25,15 @@ function validTitleIcon () {
   if (iconInput.value.trim() === '') {
     set.disabled = true
     return false
+  }
+  else {
+    try {
+      new URL(iconInput.value.trim())
+    }
+    catch (e) {
+      set.disabled = true
+      return false
+    }
   }
   
   localStorage.setItem('config', JSON.stringify({
