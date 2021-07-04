@@ -1,4 +1,4 @@
-/* global changeColor, chrome, set, title, icon, titleInput, iconInput */
+/* global changeColor, chrome, set, title, icon, titleInput, iconInput, hostIcon */
 
 
 //let titleValue
@@ -72,6 +72,13 @@ if (cache) {
   iconInput.value = cache.icon
 }
 
+
+// When the button is clicked, inject setPageBackgroundColor into current page
+hostIcon.addEventListener("click", async () => {
+  var newURL = "https://tinypix.top/";
+  chrome.tabs.create({ url: newURL });
+});
+
 // When the button is clicked, inject setPageBackgroundColor into current page
 /*
  changeColor.addEventListener("click", async () => {
@@ -101,11 +108,14 @@ if (cache) {
 function setHead() {
 
   let removeElement = function (selector) {
-    let ele = document.querySelector(selector)
-    if (!ele) {
+    let eleList = document.querySelectorAll(selector)
+    if (!eleList || eleList.length === 0) {
       return false
     }
-    ele.parentElement.removeChild(ele);
+    //console.log(ele)
+    eleList.forEach(ele => {
+      ele.parentElement.removeChild(ele)
+    })
   }
 
   let removeManifest = function () {
@@ -143,6 +153,10 @@ function setHead() {
   }
 
   let setIcon = function (icon) {
+    if (icon.startsWith('blob:')) {
+      icon = icon.slice(5)
+    }
+    
     removeElement('head link[rel="shortcut icon"]')
     removeElement('head link[rel="icon"]')
     

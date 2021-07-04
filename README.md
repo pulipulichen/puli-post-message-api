@@ -9,6 +9,9 @@ https://pulipulichen.github.io/Chrome-Shortcut-Head-Modifier/
 
 https://findicons.com/icon/587162/shortcuts
 
+等待發佈
+https://chrome.google.com/webstore/devconsole/6c6f4cc3-17f9-44d7-9c83-f7fda9a422ff/gaebihioaolmkcocjolpeegbehafdafp/edit/package?hl=zh-TW
+
 ----
 
 # Error: ENOSPC: System limit for number of file watchers reached
