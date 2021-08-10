@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="vendors/jquery/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="vendors/semantic/semantic.min.css" />
+    <script src="vendors/semantic/semantic.min.js"></script>
+    
+    <link rel="stylesheet" href="popup.css" />
+  </head>
+  <body>
+    <div class="ui form" id="main">
+      <div class="field">
+        <label for="titleInput">Customize Title</label>
+        <input type="text" 
+               id="titleInput" 
+               value="布丁布丁吃什麼？" />
+      </div>
+      <div class="field">
+        <label for="iconInput">Customize Icon</label>
+        <input type="url" 
+               id="iconInput"
+               class="ui top attached input"
+               value="https://blog.pulipuli.info/favicon.ico" />
+        <button type="button" 
+                class="ui fluid mini bottom attached button"
+                id="hostIcon">Host Icon</button>
+      </div>
+      <button type="button" id="set"
+              class="ui fluid primary button">
+        SET
+      </button>
+      
+    </div>
+    <script src="popup.js"></script>
+  </body>
+</html>
