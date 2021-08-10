@@ -21,7 +21,7 @@ let Index = {
       return "";
     },
     linkFavicon () {
-      let icon = this.fieldFavicon
+      let icon = this.fieldFaviconResized
       let filename = this.faviconName
       //console.log(filename)
       if (filename.endsWith('.ico')) {
@@ -40,6 +40,17 @@ let Index = {
         return `<link rel="icon" type="image/gif" href="${icon}" />`
       }
       return ''
+    },
+    fieldFaviconResized () {
+      let icon = this.fieldFavicon.trim()
+      
+      // https://lh3.googleusercontent.com/-XbSdu-ANc-0/YRIs-lEv0YI/AAAAAAAFBIE/kDgHDim7xNQsBbGCLK-FiK_1m8QifyIrQCLcBGAsYHQ/s256/Picture3.png
+      if (icon.startsWith('https://lh3.googleusercontent.com/') 
+              && icon.indexOf('/s1600/') > -1) {
+        icon = icon.split('/s1600/').join('/s256/')
+      }
+      
+      return icon
     },
     fieldOutput () {
       /*
