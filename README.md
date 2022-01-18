@@ -6,6 +6,8 @@ https://pulipulichen.github.io/puli-post-message-api/puli-post-message-api.min.j
 - icon: https://www.iconninja.com/conversation-circular-symbol-icon-612279
 - JavaScript Minifier: https://www.toptal.com/developers/javascript-minifier/
 
+JavaScript最小化的時候，要注意最後不要有export或modules.export
+
 
 ----
 
