@@ -577,5 +577,3 @@ function PuliPostMessageAPI(options) {
   
   return cacheAPI
 }
-
-export default PuliPostMessageAPI
