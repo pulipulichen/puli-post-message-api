@@ -21,3 +21,5 @@ https://stackoverflow.com/a/56156015
 ````
 $ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
 ````
+
+test 
